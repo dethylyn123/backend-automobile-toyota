@@ -27,9 +27,9 @@ class EngineController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $propertyOwner = Engine::create($validated);
+        $engine = Engine::create($validated);
 
-        return $propertyOwner;
+        return $engine;
     }
 
     /**
@@ -48,11 +48,11 @@ class EngineController extends Controller
     {
         $validated = $request->validated();
 
-        $propertyOwner = Engine::findOrFail($id);
+        $engine = Engine::findOrFail($id);
 
-        $propertyOwner->update($validated);
+        $engine->update($validated);
 
-        return $propertyOwner;
+        return $engine;
     }
 
     /**
@@ -60,9 +60,9 @@ class EngineController extends Controller
      */
     public function destroy(string $id)
     {
-        $propertyOwner = Engine::findOrFail($id);
-        $propertyOwner->delete();
+        $engine = Engine::findOrFail($id);
+        $engine->delete();
 
-        return $propertyOwner;
+        return $engine;
     }
 }

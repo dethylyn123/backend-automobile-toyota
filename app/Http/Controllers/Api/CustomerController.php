@@ -27,9 +27,9 @@ class CustomerController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $propertyOwner = Customer::create($validated);
+        $customer = Customer::create($validated);
 
-        return $propertyOwner;
+        return $customer;
     }
 
     /**
@@ -48,11 +48,11 @@ class CustomerController extends Controller
     {
         $validated = $request->validated();
 
-        $propertyOwner = Customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
 
-        $propertyOwner->update($validated);
+        $customer->update($validated);
 
-        return $propertyOwner;
+        return $customer;
     }
 
     /**
@@ -60,9 +60,9 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        $propertyOwner = Customer::findOrFail($id);
-        $propertyOwner->delete();
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
 
-        return $propertyOwner;
+        return $customer;
     }
 }

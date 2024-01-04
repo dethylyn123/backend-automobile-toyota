@@ -27,9 +27,9 @@ class DealerController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $propertyOwner = Dealer::create($validated);
+        $dealer = Dealer::create($validated);
 
-        return $propertyOwner;
+        return $dealer;
     }
 
     /**
@@ -48,11 +48,11 @@ class DealerController extends Controller
     {
         $validated = $request->validated();
 
-        $propertyOwner = Dealer::findOrFail($id);
+        $dealer = Dealer::findOrFail($id);
 
-        $propertyOwner->update($validated);
+        $dealer->update($validated);
 
-        return $propertyOwner;
+        return $dealer;
     }
 
     /**
@@ -60,9 +60,9 @@ class DealerController extends Controller
      */
     public function destroy(string $id)
     {
-        $propertyOwner = Dealer::findOrFail($id);
-        $propertyOwner->delete();
+        $dealer = Dealer::findOrFail($id);
+        $dealer->delete();
 
-        return $propertyOwner;
+        return $dealer;
     }
 }

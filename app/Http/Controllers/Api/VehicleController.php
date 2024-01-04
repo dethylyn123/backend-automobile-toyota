@@ -27,9 +27,9 @@ class VehicleController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $propertyOwner = Vehicle::create($validated);
+        $vehicle = Vehicle::create($validated);
 
-        return $propertyOwner;
+        return $vehicle;
     }
 
     /**
@@ -48,11 +48,11 @@ class VehicleController extends Controller
     {
         $validated = $request->validated();
 
-        $propertyOwner = Vehicle::findOrFail($id);
+        $vehicle = Vehicle::findOrFail($id);
 
-        $propertyOwner->update($validated);
+        $vehicle->update($validated);
 
-        return $propertyOwner;
+        return $vehicle;
     }
 
     /**
@@ -60,9 +60,9 @@ class VehicleController extends Controller
      */
     public function destroy(string $id)
     {
-        $propertyOwner = Vehicle::findOrFail($id);
-        $propertyOwner->delete();
+        $vehicle = Vehicle::findOrFail($id);
+        $vehicle->delete();
 
-        return $propertyOwner;
+        return $vehicle;
     }
 }

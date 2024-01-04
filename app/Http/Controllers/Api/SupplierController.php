@@ -27,9 +27,9 @@ class SupplierController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $propertyOwner = Supplier::create($validated);
+        $supplier = Supplier::create($validated);
 
-        return $propertyOwner;
+        return $supplier;
     }
 
     /**
@@ -48,11 +48,11 @@ class SupplierController extends Controller
     {
         $validated = $request->validated();
 
-        $propertyOwner = Supplier::findOrFail($id);
+        $supplier = Supplier::findOrFail($id);
 
-        $propertyOwner->update($validated);
+        $supplier->update($validated);
 
-        return $propertyOwner;
+        return $supplier;
     }
 
     /**
@@ -60,9 +60,9 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        $propertyOwner = Supplier::findOrFail($id);
-        $propertyOwner->delete();
+        $supplier = Supplier::findOrFail($id);
+        $supplier->delete();
 
-        return $propertyOwner;
+        return $supplier;
     }
 }

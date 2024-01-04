@@ -27,9 +27,9 @@ class ModelsController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $propertyOwner = Models::create($validated);
+        $model = Models::create($validated);
 
-        return $propertyOwner;
+        return $model;
     }
 
     /**
@@ -48,11 +48,11 @@ class ModelsController extends Controller
     {
         $validated = $request->validated();
 
-        $propertyOwner = Models::findOrFail($id);
+        $model = Models::findOrFail($id);
 
-        $propertyOwner->update($validated);
+        $model->update($validated);
 
-        return $propertyOwner;
+        return $model;
     }
 
     /**
@@ -60,9 +60,9 @@ class ModelsController extends Controller
      */
     public function destroy(string $id)
     {
-        $propertyOwner = Models::findOrFail($id);
-        $propertyOwner->delete();
+        $model = Models::findOrFail($id);
+        $model->delete();
 
-        return $propertyOwner;
+        return $model;
     }
 }

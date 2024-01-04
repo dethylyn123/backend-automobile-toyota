@@ -11,7 +11,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,27 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        if (request()->routeIs('user.login')) {
+            return [
+                'email' => 'required|string|email|max:255',
+                'password' => 'required|min:8',
+            ];
+        } else if (request()->routeIs('user.store')) { //user register
+            return [
+                'lastname' => 'required|string|min:5',
+                'firstname' => 'required|string|min:5',
+                'email' => 'required|string|email|unique:App\Models\User|max:255',
+                'password' => 'required|min:8|confirmed',
+            ];
+        } else if (request()->routeIs('user.update')) {
+            return [
+                'lastname' => 'required|string|min:5',
+                'firstname' => 'required|string|min:5',
+                'role'     => 'required|string',
+                'email' => 'required|string|email|max:255',
+                'password' => 'required|min:8|confirmed',
+                'image' => 'required|image|mimes:jpg,bmp,png|max:2048'
+            ];
+        }
     }
 }

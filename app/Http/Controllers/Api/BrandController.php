@@ -27,9 +27,9 @@ class BrandController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $propertyOwner = Brand::create($validated);
+        $brand = Brand::create($validated);
 
-        return $propertyOwner;
+        return $brand;
     }
 
     /**
@@ -48,11 +48,11 @@ class BrandController extends Controller
     {
         $validated = $request->validated();
 
-        $propertyOwner = Brand::findOrFail($id);
+        $brand = Brand::findOrFail($id);
 
-        $propertyOwner->update($validated);
+        $brand->update($validated);
 
-        return $propertyOwner;
+        return $brand;
     }
 
     /**
@@ -60,9 +60,9 @@ class BrandController extends Controller
      */
     public function destroy(string $id)
     {
-        $propertyOwner = Brand::findOrFail($id);
-        $propertyOwner->delete();
+        $brand = Brand::findOrFail($id);
+        $brand->delete();
 
-        return $propertyOwner;
+        return $brand;
     }
 }

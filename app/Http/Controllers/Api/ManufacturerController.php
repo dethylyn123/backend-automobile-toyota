@@ -27,9 +27,9 @@ class ManufacturerController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $propertyOwner = Manufacturer::create($validated);
+        $manufacturer = Manufacturer::create($validated);
 
-        return $propertyOwner;
+        return $manufacturer;
     }
 
     /**
@@ -48,11 +48,11 @@ class ManufacturerController extends Controller
     {
         $validated = $request->validated();
 
-        $propertyOwner = Manufacturer::findOrFail($id);
+        $manufacturer = Manufacturer::findOrFail($id);
 
-        $propertyOwner->update($validated);
+        $manufacturer->update($validated);
 
-        return $propertyOwner;
+        return $manufacturer;
     }
 
     /**
@@ -60,9 +60,9 @@ class ManufacturerController extends Controller
      */
     public function destroy(string $id)
     {
-        $propertyOwner = Manufacturer::findOrFail($id);
-        $propertyOwner->delete();
+        $manufacturer = Manufacturer::findOrFail($id);
+        $manufacturer->delete();
 
-        return $propertyOwner;
+        return $manufacturer;
     }
 }
