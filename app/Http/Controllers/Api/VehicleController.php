@@ -6,26 +6,61 @@ use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleRequest;
+use Illuminate\Support\Facades\Storage;
 
 class VehicleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Query builder instance
+        $query = Vehicle::query();
+
+        // Cater Search use "keyword"
+        if ($request->keyword) {
+            $query->where(function ($query) use ($request) {
+                $query->where('lastname', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('firstname', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        // Pagination based on the number set; You can change the number below
+        $perPage = 3;
+        return $query->paginate($perPage);
+
+        // Show all data; Uncomment if necessary
+        // return vehicle::all();
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function all(Request $request)
+    {
+        // Show data based on logged vehicle
         return Vehicle::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-
-    //  change Request to the newly created request folder 
     public function store(VehicleRequest $request)
     {
+        // $validated = $request->validated();
+
+        // $validated['password'] = Hash::make($validated['password']);
+
+        // $vehicle = vehicle::create($validated);
+
+        // return $vehicle;
+
         // Retrieve the validated input data...
         $validated = $request->validated();
+
+        // Store in carousel folder the image
+        $validated['image'] = $request->file('image')->storePublicly('vehicle', 'public');
 
         $vehicle = Vehicle::create($validated);
 
@@ -40,7 +75,6 @@ class VehicleController extends Controller
         return Vehicle::findOrFail($id);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -48,8 +82,18 @@ class VehicleController extends Controller
     {
         $validated = $request->validated();
 
+        // Upload Image to Backend and Store Image Path
+        $validated['image'] = $request->file('image')->storePublicly('vehicle', 'public');
+
+        // Get Info by Id 
         $vehicle = Vehicle::findOrFail($id);
 
+        // Delete Previous Image
+        if (!is_null($vehicle->image)) {
+            Storage::disk('public')->delete($vehicle->image);
+        }
+
+        // Update New Info
         $vehicle->update($validated);
 
         return $vehicle;
