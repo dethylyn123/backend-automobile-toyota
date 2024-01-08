@@ -34,6 +34,7 @@ class Vehicle extends Model
         'transmission',
         'sold',
         'color',
+        'image',
         'sale_date',
         'user_id',
         'model_id',

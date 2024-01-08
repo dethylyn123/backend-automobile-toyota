@@ -26,12 +26,14 @@ class UserRequest extends FormRequest
                 'email' => 'required|string|email|max:255',
                 'password' => 'required|min:8',
             ];
-        } else if (request()->routeIs('user.store')) { //user register
+        } else if (request()->routeIs('user.store')) { //user register and user store/adding
             return [
                 'lastname' => 'required|string|min:5',
                 'firstname' => 'required|string|min:5',
+                'role'      => 'nullable|string',
                 'email' => 'required|string|email|unique:App\Models\User|max:255',
                 'password' => 'required|min:8|confirmed',
+                'image' => 'nullable|image|mimes:jpg,bmp,png|max:2048'
             ];
         } else if (request()->routeIs('user.update')) {
             return [
@@ -40,7 +42,7 @@ class UserRequest extends FormRequest
                 'role'     => 'required|string',
                 'email' => 'required|string|email|max:255',
                 'password' => 'required|min:8|confirmed',
-                'image' => 'required|image|mimes:jpg,bmp,png|max:2048'
+                'image' => 'nullable|image|mimes:jpg,bmp,png|max:2048'
             ];
         }
     }

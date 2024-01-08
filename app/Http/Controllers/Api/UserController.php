@@ -59,8 +59,13 @@ class UserController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        // Store in carousel folder the image
-        $validated['image'] = $request->file('image')->storePublicly('user', 'public');
+        // Store in carousel folder the image - uncomment if necessary
+        // $validated['image'] = $request->file('image')->storePublicly('user', 'public');
+
+        // Check if the file is present and valid so it will be store in the database
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $validated['image'] = $request->file('image')->storePublicly('user', 'public');
+        }
 
         $user = User::create($validated);
 
@@ -105,8 +110,12 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
 
+        //Delete image in laravel
+        if (!is_null($user->image)) {
+            Storage::disk('public')->delete($user->image);
+        }
+        $user->delete();
         return $user;
     }
 }

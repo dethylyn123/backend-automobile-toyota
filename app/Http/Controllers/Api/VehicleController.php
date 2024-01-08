@@ -19,11 +19,15 @@ class VehicleController extends Controller
         $query = Vehicle::query();
 
         // Cater Search use "keyword"
-        if ($request->keyword) {
-            $query->where(function ($query) use ($request) {
-                $query->where('lastname', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('firstname', 'like', '%' . $request->keyword . '%');
-            });
+        // if ($request->keyword) {
+        //     $query->where(function ($query) use ($request) {
+        //         $query->where('price', 'like', '%' . $request->keyword . '%');
+        //         // ->orWhere('price', 'like', '%' . $request->keyword . '%');
+        //     });
+        // }
+
+        if ($request->has('min_price') && $request->has('max_price')) {
+            $query->whereBetween('price', [$request->min_price, $request->max_price]);
         }
 
         // Pagination based on the number set; You can change the number below
@@ -105,8 +109,8 @@ class VehicleController extends Controller
     public function destroy(string $id)
     {
         $vehicle = Vehicle::findOrFail($id);
+        Storage::disk('public')->delete($vehicle->image);
         $vehicle->delete();
-
         return $vehicle;
     }
 }
