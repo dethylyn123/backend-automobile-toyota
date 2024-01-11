@@ -12,9 +12,27 @@ class DealerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Dealer::all();
+        // Query builder instance
+        $query = Dealer::query();
+
+        // Cater Search use "keyword"
+        if ($request->has('area') && $request->has('dealer_name')) {
+            $query->where(function ($query) use ($request) {
+                $query->where('area', 'like', '%' . $request->area . '%')
+                    ->where('dealer_name', 'like', '%' . $request->dealer_name . '%');
+                // Add more conditions as needed
+            });
+        }
+
+
+        // Pagination based on the number set; You can change the number below
+        $perPage = 3;
+        return $query->paginate($perPage);
+
+        // Show all data; Uncomment if necessary
+        // return User::all();
     }
 
     /**

@@ -35,5 +35,6 @@ class Dealer extends Model
         'user_id',
         'VIN',
         'manufacturer_id',
+        'area',
     ];
 }
