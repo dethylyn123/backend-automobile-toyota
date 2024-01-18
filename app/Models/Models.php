@@ -34,4 +34,13 @@ class Models extends Model
         'user_id',
         'brand_id',
     ];
+
+    // Establish a belongsTo relationship with the Brand model
+    // 'Brand::class' specifies the related model class
+    // 'brand_id' is the foreign key column in the Vehicle model
+    // 'brand_id' is the primary key column in the Brand model
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id', 'brand_id');
+    }
 }

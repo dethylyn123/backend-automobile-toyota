@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\VehicleController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ManufacturerController;
+use App\Http\Controllers\Api\InventoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/vehicle/{id}',          'show');
         Route::post('/vehicle',              'store');
         Route::put('/vehicle/{id}',          'update');
+        Route::get('/vehicle/dealer/{id}', 'viewDealer');
         Route::delete('/vehicle/{id}',       'destroy');
     });
 
@@ -94,6 +96,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/dealer/{id}',          'show');
         Route::post('/dealer',              'store');
         Route::put('/dealer/{id}',          'update');
+        Route::get('/dealer/inventory/{id}', 'viewInventory');
         Route::delete('/dealer/{id}',       'destroy');
     });
 
@@ -111,5 +114,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/supplier',              'store');
         Route::put('/supplier/{id}',          'update');
         Route::delete('/supplier/{id}',       'destroy');
+    });
+
+    Route::controller(InventoryController::class)->group(function () {
+        Route::get('/inventory',               'index');
+        Route::get('/inventory/{id}',          'show');
+        Route::post('/inventory',              'store');
+        Route::put('/inventory/{id}',          'update');
+        Route::delete('/inventory/{id}',       'destroy');
     });
 });

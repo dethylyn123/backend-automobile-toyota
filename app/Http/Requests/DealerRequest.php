@@ -29,6 +29,7 @@ class DealerRequest extends FormRequest
             'VIN' => 'required|integer',
             'manufacturer_id' => 'required|integer',
             'area' => 'required|string|max:255',
+            'map' => 'required|string|max:255',
         ];
     }
 }
