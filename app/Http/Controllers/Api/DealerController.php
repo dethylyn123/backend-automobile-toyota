@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Dealer;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DealerRequest;
-use App\Models\Inventory;
+use Illuminate\Support\Facades\Auth;
 
 class DealerController extends Controller
 {
@@ -119,6 +120,26 @@ class DealerController extends Controller
         // add this in return response if you want to get the information of the dealer 
         // 'dealer' => $dealer, 
     }
+
+    /**
+     * Display the inventory of the logged user (Dealer).
+     */
+    // public function viewLoggedUserInventory(Request $request)
+    // {
+    //     // Find the logged-in user
+    //     $loggedUser = Auth::user();
+
+    //     // Check if the user has the 'dealer' role
+    //     // if (!$loggedUser || !$loggedUser->hasRole('dealer')) {
+    //     //     return response()->json(['error' => 'Unauthorized'], 401);
+    //     // }
+
+    //     // Fetch the dealer's inventory directly through the relationship
+    //     $inventoryItems = $loggedUser->dealer->inventory;
+
+    //     // You can customize the response format based on your needs
+    //     return response()->json(['inventory' => $inventoryItems]);
+    // }
 
 
     /**

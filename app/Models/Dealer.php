@@ -38,4 +38,13 @@ class Dealer extends Model
         'area',
         'map',
     ];
+
+    /**
+     * Define a relationship with the Inventory model.
+     * Dealer has many Inventory items using 'dealer_id' as the foreign key.
+     */
+    public function inventory()
+    {
+        return $this->hasMany(Inventory::class, 'dealer_id');
+    }
 }

@@ -46,8 +46,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
     //User Specific APIs = update of image based kong kinsa tong user nga ni log in
-    Route::get('/profile/show', [ProfileController::class, 'show']);
+    Route::get('/profile/show', [ProfileController::class, 'showProfile']);
     Route::put('/profile/image', [ProfileController::class, 'image'])->name('profile.image');
+    Route::get('/profile/inventory/show', [ProfileController::class, 'showInventory']);
 
     Route::controller(ManufacturerController::class)->group(function () {
         Route::get('/manufacturer',               'index');

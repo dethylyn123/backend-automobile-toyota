@@ -42,4 +42,10 @@ class Inventory extends Model
         'user_id',
         'dealer_id',
     ];
+
+    public function dealer()
+    {
+        return $this->belongsTo(Dealer::class, 'dealer_id');
+    }
+    
 }
