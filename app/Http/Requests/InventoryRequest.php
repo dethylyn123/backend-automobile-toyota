@@ -30,7 +30,6 @@ class InventoryRequest extends FormRequest
             'image' => 'nullable|image|mimes:jpg,bmp,png|max:2048',
             'category' => 'required|string|max:255',
             'stock' => 'required|integer',
-            'sales' => 'required|integer',
             'dealer' => 'required|string|max:255',
             'user_id' => 'required|integer',
             'dealer_id' => 'required|integer',

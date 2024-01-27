@@ -49,14 +49,6 @@ class InventoryController extends Controller
      */
     public function store(InventoryRequest $request)
     {
-        // $validated = $request->validated();
-
-        // $validated['password'] = Hash::make($validated['password']);
-
-        // $user = User::create($validated);
-
-        // return $user;
-
         // Retrieve the validated input data...
         $validated = $request->validated();
 
@@ -65,12 +57,12 @@ class InventoryController extends Controller
 
         // Check if the file is present and valid so it will be store in the database
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $validated['image'] = $request->file('image')->storePublicly('user', 'public');
+            $validated['image'] = $request->file('image')->storePublicly('inventory', 'public');
         }
 
-        $user = Inventory::create($validated);
+        $inventory = Inventory::create($validated);
 
-        return $user;
+        return $inventory;
     }
 
     /**
@@ -88,21 +80,33 @@ class InventoryController extends Controller
     {
         $validated = $request->validated();
 
-        // Upload Image to Backend and Store Image Path
-        $validated['image'] = $request->file('image')->storePublicly('user', 'public');
+        // Check if a file was uploaded
+        if ($request->hasFile('image')) {
+            // Upload Image to Backend and Store Image Path
+            $validated['image'] = $request->file('image')->storePublicly('inventory', 'public');
 
-        // Get Info by Id 
-        $user = Inventory::findOrFail($id);
+            // Get Info by Id 
+            $inventory = Inventory::findOrFail($id);
 
-        // Delete Previous Image
-        if (!is_null($user->image)) {
-            Storage::disk('public')->delete($user->image);
-        }
+            // Delete Previous Image
+            if (!is_null($inventory->image)) {
+                Storage::disk('public')->delete($inventory->image);
+            }
 
-        // Update New Info
-        $user->update($validated);
+            // Update New Info
+            $inventory->update($validated);
 
-        return $user;
+            return $inventory;
+            }
+    
+            // If no file was uploaded or if the file is not valid, proceed without updating the image
+            // Get Info by Id 
+            $inventory = Inventory::findOrFail($id);
+
+            // Update New Info without modifying the image
+            $inventory->update($validated);
+
+            return $inventory;
     }
 
     /**
@@ -110,13 +114,13 @@ class InventoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = Inventory::findOrFail($id);
+        $inventory = Inventory::findOrFail($id);
 
         //Delete image in laravel
-        if (!is_null($user->image)) {
-            Storage::disk('public')->delete($user->image);
+        if (!is_null($inventory->image)) {
+            Storage::disk('public')->delete($inventory->image);
         }
-        $user->delete();
-        return $user;
+        $inventory->delete();
+        return $inventory;
     }
 }

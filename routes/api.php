@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\DealerController;
 use App\Http\Controllers\Api\EngineController;
@@ -123,5 +124,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/inventory',              'store');
         Route::put('/inventory/{id}',          'update');
         Route::delete('/inventory/{id}',       'destroy');
+    });
+
+    Route::controller(SaleController::class)->group(function () {
+        Route::get('/sale',               'index');
+        Route::get('/sale/{id}',          'show');
+        Route::post('/sale',              'store');
+        Route::put('/sale/{id}',          'update');
+        Route::delete('/sale/{id}',       'destroy');
     });
 });

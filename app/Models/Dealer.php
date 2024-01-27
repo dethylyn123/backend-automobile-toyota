@@ -36,7 +36,6 @@ class Dealer extends Model
         'VIN',
         'manufacturer_id',
         'area',
-        'map',
     ];
 
     /**

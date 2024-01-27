@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DealerRequest extends FormRequest
+class SaleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,12 @@ class DealerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dealer_name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
+            'sale_date' => 'required|date',
+            'income' => 'required|integer',
+            'gender' => 'required|string|max:255',
             'user_id' => 'required|integer',
+            'customer_id' => 'required|integer',
             'VIN' => 'required|integer',
-            'manufacturer_id' => 'required|integer',
-            'area' => 'required|string|max:255',
         ];
     }
 }

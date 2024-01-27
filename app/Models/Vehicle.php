@@ -29,13 +29,10 @@ class Vehicle extends Model
      * @var array
      */
     protected $fillable = [
-        'in_inventory',
         'price',
         'transmission',
-        'sold',
         'color',
         'image',
-        'sale_date',
         'user_id',
         'model_id',
         'brand_id',

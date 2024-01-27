@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Inventory extends Model
+class Sale extends Model
 {
     use HasFactory;
 
@@ -14,14 +14,14 @@ class Inventory extends Model
      *
      * @var string
      */
-    protected $table = 'inventory';
+    protected $table = 'sales';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'inventory_id';
+    protected $primaryKey = 'sale_id';
 
     /**
      * The attributes that are mass assignable.
@@ -29,22 +29,11 @@ class Inventory extends Model
      * @var array
      */
     protected $fillable = [
-        'VIN',
-        'model_name',
-        'category',
-        'price',
-        'color',
-        'image',
-        'category',
-        'stock',
-        'dealer',
+        'sale_date',
+        'income',
+        'gender',
         'user_id',
-        'dealer_id',
+        'customer_id',
+        'VIN',
     ];
-
-    public function dealer()
-    {
-        return $this->belongsTo(Dealer::class, 'dealer_id');
-    }
-    
 }

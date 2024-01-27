@@ -13,16 +13,26 @@ use Illuminate\Support\Facades\Storage;
 class VehicleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. combine vehicle, model, and brand
      */
     public function index(Request $request)
     {
         $query = Vehicle::with(['models.brand']);
 
-        // Search by "Keyword" specific brand
+        // Search by "Keyword" (brand_name or price)
         if ($request->has('keyword')) {
-            $query->whereHas('models.brand', function ($query) use ($request) {
-                $query->where('brand_name', $request->keyword);
+            $query->where(function ($query) use ($request) {
+                // Check if the keyword is numeric (assumed to be a price)
+                if (is_numeric($request->keyword)) {
+                    $query->whereHas('models.brand', function ($query) use ($request) {
+                        $query->where('price', '<=', $request->keyword);
+                    });
+                } else {
+                    // If not numeric, search by brand_name
+                    $query->whereHas('models.brand', function ($query) use ($request) {
+                        $query->where('brand_name', $request->keyword);
+                    });
+                }
             });
         }
 
@@ -37,8 +47,22 @@ class VehicleController extends Controller
      */
     public function all(Request $request)
     {
-        // Show data based on logged vehicle
-        return Vehicle::all();
+        // Query builder instance
+        $query = Vehicle::query();
+
+        // Cater Search use "keyword"
+        if ($request->keyword) {
+            $query->where(function ($query) use ($request) {
+                $query->where('VIN', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        // Pagination based on the number set; You can change the number below
+        $perPage = 3;
+        return $query->paginate($perPage);
+
+        // Show all data; Uncomment if necessary
+        // return User::all();
     }
 
     /**
@@ -66,12 +90,13 @@ class VehicleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource.combine vehicle, model, and brand
      */
     public function show(string $id)
     {
         return Vehicle::findOrFail($id);
     }
+
 
     /**
      * Display the dealer for a specific vehicle.

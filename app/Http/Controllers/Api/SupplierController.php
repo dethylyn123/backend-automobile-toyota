@@ -12,9 +12,24 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Supplier::all();
+        // Query builder instance
+        $query = Supplier::query();
+
+        // Cater Search use "keyword"
+        if ($request->keyword) {
+            $query->where(function ($query) use ($request) {
+                $query->where('supplier_name', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        // Pagination based on the number set; You can change the number below
+        $perPage = 3;
+        return $query->paginate($perPage);
+
+        // Show all data; Uncomment if necessary
+        // return User::all();
     }
 
     /**

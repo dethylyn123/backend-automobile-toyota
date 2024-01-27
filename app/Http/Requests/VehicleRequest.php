@@ -22,13 +22,10 @@ class VehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'in_inventory' => 'required|boolean',
             'price' => 'required|integer',
             'transmission' => 'required|string|max:255',
-            'sold' => 'required|boolean',
             'color' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpg,bmp,png|max:2048',
-            'sale_date' => 'date|nullable',
             'user_id' => 'required|integer',
             'model_id' => 'required|integer',
             'brand_id' => 'required|integer',

@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Customer;
+use App\Models\Sale;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaleRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CustomerRequest;
 
-class CustomerController extends Controller
+class SaleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        // return all customer
-        // return Customer::all();
-
         // Query builder instance
-        $query = Customer::query();
+        $query = Sale::query();
 
         // Cater Search use "keyword"
         if ($request->keyword) {
             $query->where(function ($query) use ($request) {
-                $query->where('customer_name', 'like', '%' . $request->keyword . '%');
+                $query->where('VIN', 'like', '%' . $request->keyword . '%');
             });
         }
 
         // Pagination based on the number set; You can change the number below
         $perPage = 3;
         return $query->paginate($perPage);
+
+        // Show all data; Uncomment if necessary
+        // return User::all();
     }
 
     /**
@@ -37,14 +37,14 @@ class CustomerController extends Controller
      */
 
     //  change Request to the newly created request folder 
-    public function store(CustomerRequest $request)
+    public function store(SaleRequest $request)
     {
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $customer = Customer::create($validated);
+        $sale = Sale::create($validated);
 
-        return $customer;
+        return $sale;
     }
 
     /**
@@ -52,22 +52,22 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        return Customer::findOrFail($id);
+        return Sale::findOrFail($id);
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CustomerRequest $request, string $id)
+    public function update(SaleRequest $request, string $id)
     {
         $validated = $request->validated();
 
-        $customer = Customer::findOrFail($id);
+        $sale = Sale::findOrFail($id);
 
-        $customer->update($validated);
+        $sale->update($validated);
 
-        return $customer;
+        return $sale;
     }
 
     /**
@@ -75,9 +75,9 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        $customer = Customer::findOrFail($id);
-        $customer->delete();
+        $sale = Sale::findOrFail($id);
+        $sale->delete();
 
-        return $customer;
+        return $sale;
     }
 }
