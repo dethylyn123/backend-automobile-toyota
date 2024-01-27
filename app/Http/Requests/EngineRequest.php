@@ -28,6 +28,7 @@ class EngineRequest extends FormRequest
             'maximum_torque' => 'required|string|max:255',
             'fuel_type' => 'required|string|max:255',
             'fuel_capacity' => 'required|string|max:255',
+            'condition' => 'nullable|string|max:255',
             'user_id' => 'required|integer',
             'VIN' => 'required|integer',
         ];

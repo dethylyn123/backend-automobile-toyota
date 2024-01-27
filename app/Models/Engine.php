@@ -37,5 +37,6 @@ class Engine extends Model
         'fuel_capacity',
         'user_id',
         'VIN',
+        'condition',
     ];
 }
