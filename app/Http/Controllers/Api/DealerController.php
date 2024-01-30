@@ -56,7 +56,7 @@ class DealerController extends Controller
 
 
         // Pagination based on the number set; You can change the number below
-        $perPage = 3;
+        $perPage = 4;
         return $query->paginate($perPage);
 
         // Show all data; Uncomment if necessary

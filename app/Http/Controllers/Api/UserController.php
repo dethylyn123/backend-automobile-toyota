@@ -27,7 +27,7 @@ class UserController extends Controller
         }
 
         // Pagination based on the number set; You can change the number below
-        $perPage = 3;
+        $perPage = 4;
         return $query->paginate($perPage);
 
         // Show all data; Uncomment if necessary
@@ -51,7 +51,7 @@ class UserController extends Controller
         }
 
         // Pagination based on the number set; You can change the number below
-        $perPage = 3;
+        $perPage = 4;
         return $query->paginate($perPage);
 
         // Show all data; Uncomment if necessary
@@ -99,37 +99,37 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UserRequest $request, string $id)
-{
-    $validated = $request->validated();
+    {
+        $validated = $request->validated();
 
-    // Check if a file was uploaded
-    if ($request->hasFile('image')) {
-        // Upload Image to Backend and Store Image Path
-        $validated['image'] = $request->file('image')->storePublicly('user', 'public');
+        // Check if a file was uploaded
+        if ($request->hasFile('image')) {
+            // Upload Image to Backend and Store Image Path
+            $validated['image'] = $request->file('image')->storePublicly('user', 'public');
 
+            // Get Info by Id 
+            $user = User::findOrFail($id);
+
+            // Delete Previous Image
+            if (!is_null($user->image)) {
+                Storage::disk('public')->delete($user->image);
+            }
+
+            // Update New Info
+            $user->update($validated);
+
+            return $user;
+        }
+
+        // If no file was uploaded or if the file is not valid, proceed without updating the image
         // Get Info by Id 
         $user = User::findOrFail($id);
 
-        // Delete Previous Image
-        if (!is_null($user->image)) {
-            Storage::disk('public')->delete($user->image);
-        }
-
-        // Update New Info
+        // Update New Info without modifying the image
         $user->update($validated);
 
         return $user;
     }
-    
-    // If no file was uploaded or if the file is not valid, proceed without updating the image
-    // Get Info by Id 
-    $user = User::findOrFail($id);
-
-    // Update New Info without modifying the image
-    $user->update($validated);
-
-    return $user;
-}
 
 
     /**

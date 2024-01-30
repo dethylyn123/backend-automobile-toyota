@@ -23,7 +23,7 @@ class SaleRequest extends FormRequest
     {
         return [
             'sale_date' => 'required|date',
-            'income' => 'required|integer',
+            'income' => 'required',
             'gender' => 'required|string|max:255',
             'user_id' => 'required|integer',
             'customer_id' => 'required|integer',

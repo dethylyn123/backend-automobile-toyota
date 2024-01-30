@@ -45,7 +45,7 @@ class ModelsController extends Controller
 
 
         // Pagination based on the number set; You can change the number below
-        $perPage = 3;
+        $perPage = 6;
         $data = $query->paginate($perPage);
 
         return response()->json($data);

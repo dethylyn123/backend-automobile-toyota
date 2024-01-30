@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ManufacturerController;
 use App\Http\Controllers\Api\InventoryController;
+use App\Http\Controllers\QueryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -132,5 +133,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/sale',              'store');
         Route::put('/sale/{id}',          'update');
         Route::delete('/sale/{id}',       'destroy');
+    });
+
+    Route::controller(QueryController::class)->group(function () {
+        Route::get('/sales/trends',               'salesTrends');
     });
 });
